@@ -1,0 +1,8 @@
+name = "venn-cms-worker"
+main = "src/index.js"
+compatibility_date = "2026-08-13"
+
+[[kv_namespaces]]
+binding = "VENN_CMS_KV"
+id = "venn_cms_kv_prod"
+preview_id = "venn_cms_kv_preview"

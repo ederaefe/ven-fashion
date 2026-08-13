@@ -1,0 +1,13 @@
+{
+  "name": "venn-cms-worker",
+  "version": "1.0.0",
+  "description": "Serverless edge API for Venn Fashion CMS stored in Cloudflare Workers KV",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

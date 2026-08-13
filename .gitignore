@@ -1,0 +1,26 @@
+# Node
+node_modules/
+dist/
+build/
+
+# Vite / Local cache
+.vite/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Legacy Scrap Files
+legacy_orange_culture/
+
+# Agent / Gemini Workspace files
+.gemini/
+.agents/
+.system_generated/
+.tempmediaStorage/
+brain/
+*.log
