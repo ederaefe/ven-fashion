@@ -20,7 +20,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const fetchCmsData = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_CMS_API_URL || 'http://localhost:8787/api/cms';
+        const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://venn-cms-worker.derago.workers.dev/api/cms';
         const res = await fetch(apiUrl);
         if (res.ok) {
           const data = await res.json();
