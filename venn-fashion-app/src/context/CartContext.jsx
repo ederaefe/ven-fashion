@@ -95,30 +95,76 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const [activeCurrency, setActiveCurrency] = useState('USD');
+  const [appliedPromo, setAppliedPromo] = useState('');
+  const [promoDiscount, setPromoDiscount] = useState(0);
+
+  const currencyRates = {
+    USD: { rate: 1.0, symbol: '$' },
+    EUR: { rate: 0.92, symbol: '€' },
+    GBP: { rate: 0.79, symbol: '£' },
+    NGN: { rate: 1600.0, symbol: '₦' }
+  };
+
+  const formatPrice = (usdPriceValue) => {
+    if (usdPriceValue === undefined || usdPriceValue === null) return '';
+    let numPrice = 0;
+    if (typeof usdPriceValue === 'number') {
+      numPrice = usdPriceValue;
+    } else {
+      numPrice = parseFloat(String(usdPriceValue).replace(/[^0-9.]/g, '')) || 0;
+    }
+    const { rate, symbol } = currencyRates[activeCurrency] || currencyRates.USD;
+    const converted = numPrice * rate;
+    
+    if (activeCurrency === 'NGN') {
+      return `${symbol}${Math.round(converted).toLocaleString()}`;
+    }
+    return `${symbol}${converted.toFixed(2)}`;
+  };
+
+  const applyPromoCode = (code) => {
+    if (code.toUpperCase() === 'VENN10') {
+      setAppliedPromo('VENN10');
+      setPromoDiscount(0.10);
+      showToast('Promo code VENN10 applied: 10% off!');
+      return true;
+    } else {
+      showToast('Invalid promo code');
+      return false;
+    }
+  };
+
+  const removePromoCode = () => {
+    setAppliedPromo('');
+    setPromoDiscount(0);
+    showToast('Promo code removed');
+  };
+
   const addToCart = (product, selectedSize = 'M', selectedColor = 'Standard') => {
     setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id && item.selectedSize === selectedSize);
+      const existingItem = prevCart.find(item => item.id === product.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === product.id && item.selectedSize === selectedSize
+          item.id === product.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
       return [...prevCart, { ...product, selectedSize, selectedColor, quantity: 1 }];
     });
-    showToast(`Added "${product.title}" (${selectedSize}) to bag`);
+    showToast(`Added "${product.title}" (${selectedSize} / ${selectedColor}) to bag`);
     setIsCartOpen(true);
   };
 
-  const removeFromCart = (id, selectedSize) => {
-    setCart(prevCart => prevCart.filter(item => !(item.id === id && item.selectedSize === selectedSize)));
+  const removeFromCart = (id, selectedSize, selectedColor) => {
+    setCart(prevCart => prevCart.filter(item => !(item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor)));
   };
 
-  const updateQuantity = (id, selectedSize, delta) => {
+  const updateQuantity = (id, selectedSize, selectedColor, delta) => {
     setCart(prevCart =>
       prevCart.map(item => {
-        if (item.id === id && item.selectedSize === selectedSize) {
+        if (item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor) {
           const newQty = item.quantity + delta;
           return newQty > 0 ? { ...item, quantity: newQty } : item;
         }
@@ -161,7 +207,14 @@ export const CartProvider = ({ children }) => {
         totalItemsCount,
         products,
         collections,
-        slides
+        slides,
+        activeCurrency,
+        setActiveCurrency,
+        formatPrice,
+        appliedPromo,
+        promoDiscount,
+        applyPromoCode,
+        removePromoCode
       }}
     >
       {children}

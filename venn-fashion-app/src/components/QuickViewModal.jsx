@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import OptimizedGifImage from './OptimizedGifImage';
 
 const QuickViewModal = () => {
-  const { quickViewProduct, setQuickViewProduct, addToCart, setIsSizeGuideOpen } = useCart();
+  const { quickViewProduct, setQuickViewProduct, addToCart, setIsSizeGuideOpen, formatPrice } = useCart();
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedColor, setSelectedColor] = useState('Obsidian');
 
@@ -45,7 +45,7 @@ const QuickViewModal = () => {
             autoPlay={true}
             className="w-full h-full"
           />
-        </div>
+         </div>
 
         {/* Product Info */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-between overflow-y-auto">
@@ -54,7 +54,7 @@ const QuickViewModal = () => {
               {quickViewProduct.title}
             </h2>
             <p className="text-lg font-sans text-terracotta font-semibold mb-4">
-              {quickViewProduct.price}
+              {formatPrice(quickViewProduct.price)}
             </p>
             <p className="text-xs font-sans text-gray-600 leading-relaxed mb-6">
               Crafted from premium sustainable textiles. Features full 5-second motion preview. Designed with tailored precision for a relaxed luxury silhouette.

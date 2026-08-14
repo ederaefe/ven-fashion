@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { mockProducts } from '../data/mockCms';
 
 const SearchModal = () => {
-  const { isSearchOpen, setIsSearchOpen, setQuickViewProduct } = useCart();
+  const { isSearchOpen, setIsSearchOpen, setQuickViewProduct, products, formatPrice } = useCart();
   const [searchTerm, setSearchTerm] = useState('');
 
   if (!isSearchOpen) return null;
 
-  const filtered = mockProducts.filter(p => 
+  const filtered = products.filter(p => 
     p.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -56,7 +55,7 @@ const SearchModal = () => {
             >
               <img src={product.imagePrimary} alt={product.title} className="w-full h-48 object-cover mb-4" />
               <h3 className="text-xs font-sans text-obsidian font-medium group-hover:text-terracotta">{product.title}</h3>
-              <p className="text-xs font-sans text-gray-500 mt-1">{product.price}</p>
+              <p className="text-xs font-sans text-gray-500 mt-1">{formatPrice(product.price)}</p>
             </div>
           ))}
         </div>

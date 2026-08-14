@@ -3,14 +3,34 @@ import { useCart } from '../context/CartContext';
 import OptimizedGifImage from './OptimizedGifImage';
 
 const FeaturedProducts = () => {
-  const { products, setQuickViewProduct, addToCart, wishlist, toggleWishlist } = useCart();
+  const { products, setQuickViewProduct, addToCart, wishlist, toggleWishlist, formatPrice } = useCart();
   const [activeCategory, setActiveCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('default');
 
   const categories = ['All', 'Outerwear', 'Shirts', 'Trousers', 'Knitwear'];
 
-  const filteredProducts = activeCategory === 'All' 
+  let filteredProducts = activeCategory === 'All' 
     ? products 
     : products.filter(p => p.category === activeCategory);
+
+  // In-memory sorting
+  if (sortBy === 'price-low') {
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      const pA = parseFloat(a.price.replace(/[^0-9.]/g, '')) || 0;
+      const pB = parseFloat(b.price.replace(/[^0-9.]/g, '')) || 0;
+      return pA - pB;
+    });
+  } else if (sortBy === 'price-high') {
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      const pA = parseFloat(a.price.replace(/[^0-9.]/g, '')) || 0;
+      const pB = parseFloat(b.price.replace(/[^0-9.]/g, '')) || 0;
+      return pB - pA;
+    });
+  } else if (sortBy === 'name-az') {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sortBy === 'name-za') {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.title.localeCompare(a.title));
+  }
 
   return (
     <section id="new-arrivals" className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
@@ -19,21 +39,40 @@ const FeaturedProducts = () => {
           Curated Essentials
         </h2>
         
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-4 border-b border-gray-200 pb-4 max-w-2xl mx-auto">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`text-xs font-sans uppercase tracking-widest px-3 py-1 transition-colors ${
-                activeCategory === cat 
-                  ? 'text-terracotta border-b-2 border-terracotta font-semibold' 
-                  : 'text-gray-500 hover:text-obsidian'
-              }`}
+        {/* Filters and Sorting Bar */}
+        <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 border-b border-gray-200 pb-4 max-w-4xl mx-auto">
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`text-xs font-sans uppercase tracking-widest px-3 py-1 transition-colors ${
+                  activeCategory === cat 
+                    ? 'text-terracotta border-b-2 border-terracotta font-semibold' 
+                    : 'text-gray-500 hover:text-obsidian'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort Selector */}
+          <div className="flex items-center space-x-2">
+            <span className="text-[10px] font-sans uppercase tracking-widest text-gray-400">Sort By:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-transparent border border-gray-200 text-xs font-sans uppercase tracking-wider px-2 py-1 focus:outline-none focus:border-terracotta cursor-pointer text-charcoal"
             >
-              {cat}
-            </button>
-          ))}
+              <option value="default">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name-az">Alphabetically: A-Z</option>
+              <option value="name-za">Alphabetically: Z-A</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -107,9 +146,9 @@ const FeaturedProducts = () => {
                     {product.title}
                   </h3>
                   <div className="flex justify-center items-center space-x-2 text-xs font-sans">
-                    <span className="text-obsidian font-medium">{product.price}</span>
+                    <span className="text-obsidian font-medium">{formatPrice(product.price)}</span>
                     {product.originalPrice && (
-                      <span className="line-through text-gray-400">{product.originalPrice}</span>
+                      <span className="line-through text-gray-400">{formatPrice(product.originalPrice)}</span>
                     )}
                   </div>
                 </div>

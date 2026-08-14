@@ -28,5 +28,6 @@ Venn Fashion digital platform is built with modern high-performance semantic HTM
 5. **Toast Notification System**: Instant feedback popups upon subscribing to newsletter or modifying cart items.
 6. **Size Guide Modal**: Detailed measurement tables (Chest, Waist, Hips, Sleeve) and tailored fit recommendations.
 7. **Recently Viewed Tracker**: Local storage persistence keeping track of browsed products for instant re-engagement.
-8. **Wishlist Drawer**: Slide-over drawer displaying saved favorites with one-click Add to Bag.
+9. **Dynamic Multi-Currency Engine**: Translates base USD prices into EUR, GBP, and NGN using context-bound rates and localized symbol layouts.
+10. **Checkout Discount Engine**: Validates promo entries (such as `VENN10` for 10% off) and recalculates checkout subtotals dynamically.
 

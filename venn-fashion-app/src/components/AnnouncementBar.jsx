@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useCart } from '../context/CartContext';
 
 const AnnouncementBar = () => {
-  const [currency, setCurrency] = useState('USD ($)');
+  const { activeCurrency, setActiveCurrency } = useCart();
 
   return (
     <div className="bg-obsidian text-crispwhite text-xs font-sans uppercase tracking-widest py-2 px-4 border-b border-gray-800 flex justify-between items-center">
@@ -16,14 +17,14 @@ const AnnouncementBar = () => {
       {/* Currency Selector Dropdown */}
       <div className="relative">
         <select 
-          value={currency} 
-          onChange={(e) => setCurrency(e.target.value)}
+          value={activeCurrency} 
+          onChange={(e) => setActiveCurrency(e.target.value)}
           className="bg-transparent text-crispwhite text-[10px] uppercase font-sans tracking-widest focus:outline-none cursor-pointer pr-2"
         >
-          <option value="USD ($)" className="bg-obsidian text-crispwhite">USD ($)</option>
-          <option value="EUR (€)" className="bg-obsidian text-crispwhite">EUR (€)</option>
-          <option value="GBP (£)" className="bg-obsidian text-crispwhite">GBP (£)</option>
-          <option value="NGN (₦)" className="bg-obsidian text-crispwhite">NGN (₦)</option>
+          <option value="USD" className="bg-obsidian text-crispwhite">USD ($)</option>
+          <option value="EUR" className="bg-obsidian text-crispwhite">EUR (€)</option>
+          <option value="GBP" className="bg-obsidian text-crispwhite">GBP (£)</option>
+          <option value="NGN" className="bg-obsidian text-crispwhite">NGN (₦)</option>
         </select>
       </div>
     </div>

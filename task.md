@@ -40,4 +40,15 @@
 - [x] Scaffold and build standalone React Headless CMS Admin Dashboard (`venn-cms-admin`) on port 5174.
 - [x] Initialize Cloudflare Worker serverless database API (`venn-cms-worker`) with Workers KV bindings.
 - [x] Connect `CartContext.jsx`, `FeaturedProducts.jsx`, `CollectionGrid.jsx`, and `HeroSlider.jsx` to fetch real-time catalog parameters dynamically from the Cloudflare Workers KV API edge database.
-- [x] Verify Vite production builds for all directories compile cleanly without any warnings or errors.
+- [x] Exclude legacy scraper folders from repository via `.gitignore` rules.
+- [x] Create workspace root `README.md` documenting installation, run commands, and serverless edge bindings.
+- [x] Add GitHub remote origin `https://github.com/ederaefe/ven-fashion`.
+- [x] Commit and push workspace to remote origin utilizing `[skip ci]` flag to prevent deployment trigger.
+- [x] Verify Vite production builds for all directories compile cleanly.
+- [x] Create a premium luxury favicon using Obsidian and Terracotta Gold Venn diagrams inside the storefront public directory.
+- [x] Implement dynamic context-driven multi-currency conversion (USD, EUR, GBP, NGN) across all catalog components, modals, and checkout panels.
+- [x] Add multi-criteria sorting functionality (Price: Low-to-High, High-to-Low, A-Z, Z-A) to FeaturedProducts showcase.
+- [x] Implement checkout promo discount system supporting code 'VENN10' with live subtotal markdown calculations inside the Cart drawer.
+- [x] Fix live data synchronization bugs in the Search overlay and Campaign lookbook hotspots.
+- [x] Verify production compilation builds cleanly for all storefront paths.
+- [x] Commit updates and push repository state to GitHub remote origin.

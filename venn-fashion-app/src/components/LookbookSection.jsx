@@ -1,13 +1,16 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import { mockProducts } from '../data/mockCms';
 
 const LookbookSection = () => {
-  const { setQuickViewProduct } = useCart();
+  const { setQuickViewProduct, products, formatPrice } = useCart();
+
+  const getProductById = (id, fallbackIdx) => {
+    return products.find(p => p.id === id) || products[fallbackIdx] || products[0];
+  };
 
   const hotspots = [
-    { id: 'h1', top: '38%', left: '46%', product: mockProducts[0] },
-    { id: 'h2', top: '65%', left: '54%', product: mockProducts[1] }
+    { id: 'h1', top: '38%', left: '46%', product: getProductById('p1', 0) },
+    { id: 'h2', top: '65%', left: '54%', product: getProductById('p2', 1) }
   ];
 
   return (
@@ -29,28 +32,31 @@ const LookbookSection = () => {
         />
 
         {/* Hotspot Pins */}
-        {hotspots.map((spot) => (
-          <div 
-            key={spot.id}
-            style={{ top: spot.top, left: spot.left }}
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
-          >
-            <button 
-              onClick={() => setQuickViewProduct(spot.product)}
-              className="relative w-8 h-8 rounded-full bg-crispwhite/90 border-2 border-obsidian flex items-center justify-center hover:scale-125 transition-transform shadow-2xl animate-pulse"
-              aria-label={`Shop ${spot.product.title}`}
+        {hotspots.map((spot) => {
+          if (!spot.product) return null;
+          return (
+            <div 
+              key={spot.id}
+              style={{ top: spot.top, left: spot.left }}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
-            </button>
+              <button 
+                onClick={() => setQuickViewProduct(spot.product)}
+                className="relative w-8 h-8 rounded-full bg-crispwhite/90 border-2 border-obsidian flex items-center justify-center hover:scale-125 transition-transform shadow-2xl animate-pulse"
+                aria-label={`Shop ${spot.product.title}`}
+              >
+                <span className="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
+              </button>
 
-            {/* Hover Tooltip Card */}
-            <div className="hidden group-hover:block absolute bottom-10 left-1/2 transform -translate-x-1/2 w-52 bg-white p-3.5 shadow-2xl z-30 border border-gray-100 text-center animate-slide-up">
-              <p className="text-xs font-sans font-medium text-obsidian uppercase">{spot.product.title}</p>
-              <p className="text-xs font-sans text-terracotta font-semibold mt-0.5">{spot.product.price}</p>
-              <span className="text-[9px] font-sans uppercase tracking-widest text-gray-400 mt-2 block border-t border-gray-100 pt-1">Click to Shop</span>
+              {/* Hover Tooltip Card */}
+              <div className="hidden group-hover:block absolute bottom-10 left-1/2 transform -translate-x-1/2 w-52 bg-white p-3.5 shadow-2xl z-30 border border-gray-100 text-center animate-slide-up">
+                <p className="text-xs font-sans font-medium text-obsidian uppercase">{spot.product.title}</p>
+                <p className="text-xs font-sans text-terracotta font-semibold mt-0.5">{formatPrice(spot.product.price)}</p>
+                <span className="text-[9px] font-sans uppercase tracking-widest text-gray-400 mt-2 block border-t border-gray-100 pt-1">Click to Shop</span>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

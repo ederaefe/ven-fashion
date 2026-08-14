@@ -2,7 +2,7 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 
 const RecentlyViewed = () => {
-  const { recentlyViewed, setQuickViewProduct } = useCart();
+  const { recentlyViewed, setQuickViewProduct, formatPrice } = useCart();
 
   if (recentlyViewed.length === 0) return null;
 
@@ -23,7 +23,7 @@ const RecentlyViewed = () => {
           >
             <img src={product.imagePrimary} alt={product.title} className="w-full h-32 object-cover mb-2" />
             <h3 className="text-[10px] font-sans text-obsidian uppercase truncate group-hover:text-terracotta">{product.title}</h3>
-            <p className="text-[10px] font-sans text-gray-500">{product.price}</p>
+            <p className="text-[10px] font-sans text-gray-500">{formatPrice(product.price)}</p>
           </div>
         ))}
       </div>

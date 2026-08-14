@@ -2,7 +2,7 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 
 const WishlistDrawer = () => {
-  const { wishlist, isWishlistOpen, setIsWishlistOpen, toggleWishlist, addToCart } = useCart();
+  const { wishlist, isWishlistOpen, setIsWishlistOpen, toggleWishlist, addToCart, formatPrice } = useCart();
 
   if (!isWishlistOpen) return null;
 
@@ -43,10 +43,10 @@ const WishlistDrawer = () => {
                 <img src={item.imagePrimary} alt={item.title} className="w-16 h-20 object-cover bg-gray-100" />
                 <div className="flex-1">
                   <h3 className="text-xs font-sans font-medium text-obsidian uppercase">{item.title}</h3>
-                  <p className="text-xs font-sans text-terracotta mt-1">{item.price}</p>
+                  <p className="text-xs font-sans text-terracotta mt-1">{formatPrice(item.price)}</p>
                   <button 
                     onClick={() => {
-                      addToCart(item);
+                      addToCart(item, 'M', 'Obsidian');
                       toggleWishlist(item);
                     }}
                     className="mt-2 text-[10px] font-sans uppercase tracking-widest bg-obsidian text-crispwhite px-3 py-1 hover:bg-terracotta transition-colors"

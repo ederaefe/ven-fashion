@@ -34,7 +34,15 @@ Investigating Cloudflare's free-tier developer platform offerings to host our fr
 
 ---
 
-## 2. Transition Plan & Setup Workflow
-1. **Frontend Hosting**: Configure wrangler or connect Github to Cloudflare Pages dashboard for continuous integration of both apps.
-2. **Asset CDN**: Setup an R2 Bucket for `/assets/` and reference them directly via Cloudflare's globally distributed edge network.
-3. **Database Server**: Create a simple Cloudflare Worker API connected to KV/D1 to read/write mock CMS configurations.
+## 3. High-Fashion E-Commerce Interactive Enhancements
+
+### A. Dynamic Currency Conversion Engine
+- **Pattern**: Centralized React state representing the active currency (e.g., `USD`, `EUR`, `GBP`, `NGN`) and a utility mapping exchange multipliers (e.g., USD to EUR: 0.92, USD to GBP: 0.79, USD to NGN: 1500) and symbol prefixes.
+- **Benefits**: Ensures consistent price formatting across storefront pages (Catalog, Quick-View, Cart Drawer, Recents) without duplicate conversion math.
+
+### B. Sorting and Multi-Criteria Filtering
+- **Pattern**: Combine active category filters with a selection hook for price (low-to-high, high-to-low) and name (alphabetical). Sorting should happen in-memory on the filtered arrays before rendering.
+
+### C. Live Promo/Discount Checkouts
+- **Pattern**: Cart totals should accept coupons (e.g., `VENN10`) and modify state calculations (`discountTotal`), reflecting a percentage or flat markdown with immediate visual toast updates.
+
