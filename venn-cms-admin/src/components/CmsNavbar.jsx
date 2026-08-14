@@ -1,6 +1,18 @@
 import React from 'react';
 
-const CmsNavbar = ({ activeTab, setActiveTab, onOpenGistModal, onOpenExportModal, isGistConnected }) => {
+const CmsNavbar = ({ 
+  activeTab, 
+  setActiveTab, 
+  onOpenGistModal, 
+  onOpenWorkerModal, 
+  onOpenExportModal, 
+  isGistConnected, 
+  isWorkerConnected,
+  onPublishToWorker,
+  onPublishToGist,
+  isPublishingGist,
+  isPublishingWorker
+}) => {
   return (
     <header className="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -35,23 +47,59 @@ const CmsNavbar = ({ activeTab, setActiveTab, onOpenGistModal, onOpenExportModal
 
         {/* Action Controls */}
         <div className="flex items-center space-x-3">
+          {/* GitHub Gist settings trigger */}
           <button 
             onClick={onOpenGistModal}
-            className={`px-3 py-1.5 text-xs font-semibold rounded border transition-colors flex items-center space-x-1.5 ${
+            className={`px-3 py-1.5 text-[10px] font-semibold rounded border transition-colors flex items-center space-x-1.5 ${
               isGistConnected 
                 ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' 
-                : 'border-amber-500/50 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'
+                : 'border-zinc-700 bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
             }`}
           >
-            <span className={`w-2 h-2 rounded-full ${isGistConnected ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
-            <span>{isGistConnected ? 'Gist Sync Active' : 'Connect GitHub Gist'}</span>
+            <span className={`w-2 h-2 rounded-full ${isGistConnected ? 'bg-emerald-400' : 'bg-zinc-500'}`}></span>
+            <span>Gist</span>
           </button>
+
+          {/* Cloudflare Worker settings trigger */}
+          <button 
+            onClick={onOpenWorkerModal}
+            className={`px-3 py-1.5 text-[10px] font-semibold rounded border transition-colors flex items-center space-x-1.5 ${
+              isWorkerConnected 
+                ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' 
+                : 'border-zinc-700 bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${isWorkerConnected ? 'bg-emerald-400' : 'bg-zinc-500'}`}></span>
+            <span>Worker</span>
+          </button>
+
+          {/* Publish to Gist Action */}
+          {isGistConnected && (
+            <button
+              onClick={onPublishToGist}
+              disabled={isPublishingGist}
+              className="px-3 py-1.5 text-xs font-bold bg-zinc-100 hover:bg-white text-zinc-950 rounded transition-colors disabled:opacity-50"
+            >
+              {isPublishingGist ? 'Syncing...' : 'Sync Gist'}
+            </button>
+          )}
+
+          {/* Publish to Worker Action */}
+          {isWorkerConnected && (
+            <button
+              onClick={onPublishToWorker}
+              disabled={isPublishingWorker}
+              className="px-3 py-1.5 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded shadow-lg transition-colors disabled:opacity-50"
+            >
+              {isPublishingWorker ? 'Publishing...' : 'Publish to Edge'}
+            </button>
+          )}
 
           <button 
             onClick={onOpenExportModal}
             className="px-3 py-1.5 text-xs font-semibold bg-zinc-800 text-zinc-200 rounded border border-zinc-700 hover:bg-zinc-700 transition-colors"
           >
-            Export JSON
+            Export
           </button>
         </div>
 
