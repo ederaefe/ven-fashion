@@ -50,5 +50,5 @@
 - [x] Add multi-criteria sorting functionality (Price: Low-to-High, High-to-Low, A-Z, Z-A) to FeaturedProducts showcase.
 - [x] Implement checkout promo discount system supporting code 'VENN10' with live subtotal markdown calculations inside the Cart drawer.
 - [x] Fix live data synchronization bugs in the Search overlay and Campaign lookbook hotspots.
-- [x] Verify production compilation builds cleanly for all storefront paths.
 - [x] Commit updates and push repository state to GitHub remote origin.
+- [x] Create _redirects routing fallback file to prepare for Cloudflare Pages SPA deployment.
